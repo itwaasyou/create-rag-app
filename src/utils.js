@@ -46,17 +46,31 @@ export async function installDependencies(targetPath) {
         // Run npm install in the new directory
         await execAsync("npm install", { cwd: targetPath });
         spinner.succeed(chalk.green("Dependencies installed via npm."));
+        return true;
     } catch (err) {
         // Fallback for peer dependency conflicts common in AI libraries
         try {
             spinner.text = "Retrying with --legacy-peer-deps...";
             await execAsync("npm install --legacy-peer-deps", { cwd: targetPath });
             spinner.succeed(chalk.green("Dependencies installed with legacy peer deps."));
+            return true;
         } catch (retryErr) {
             spinner.fail(chalk.red("Failed to install dependencies."));
+            if (retryErr.stderr) console.error(chalk.red(retryErr.stderr));
             console.log(chalk.yellow("You can try installing manually:"));
             console.log(chalk.cyan(`  cd ${path.basename(targetPath)}`));
             console.log(chalk.cyan("  npm install --legacy-peer-deps"));
+            return false;
         }
+    }
+}
+
+export async function initGit(targetPath) {
+    const spinner = ora("Initializing git repository...").start();
+    try {
+        await execAsync("git init", { cwd: targetPath });
+        spinner.succeed(chalk.green("Git repository initialized."));
+    } catch (err) {
+        spinner.warn(chalk.yellow("Failed to initialize git repository."));
     }
 }
