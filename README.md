@@ -1,6 +1,8 @@
-# Create RAG App
+# Create RAG App (Beta)
 
-Scaffold a production-ready RAG (Retrieval Augmented Generation) application in seconds.
+> **Note:** This project is currently in beta. Features and APIs are subject to change.
+
+Scaffold a RAG (Retrieval Augmented Generation) application in seconds.
 
 [![npm version](https://img.shields.io/npm/v/create-rag-app.svg)](https://www.npmjs.com/package/create-rag-app)
 [![npm downloads](https://img.shields.io/npm/dt/create-rag-app.svg)](https://www.npmjs.com/package/create-rag-app)
